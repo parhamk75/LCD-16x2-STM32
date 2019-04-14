@@ -108,3 +108,20 @@ void lcd_clear(lcd_t * lcd)
 {
 	send_cmd(lcd, 0x01);
 }
+
+void lcd_puts(lcd_t * lcd, char *str)
+{
+	while (*str != 0)
+	{
+		lcd_putchar(lcd, *str);
+		str++;
+		HAL_Delay(1);
+	}
+}
+
+void lcd_set_curser(lcd_t * lcd, uint16_t row, uint16_t col)
+{
+	uint8_t firstCharAdr[] = { 0x80, 0xC0 };
+	send_cmd(lcd, firstCharAdr[row-1] + col - 1);
+	HAL_Delay(1);
+}

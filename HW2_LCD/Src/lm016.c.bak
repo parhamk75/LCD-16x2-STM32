@@ -71,3 +71,55 @@ void lcd_init(lcd_t * lcd)
 	
 }	
 	
+void lcd_putchar(lcd_t * lcd, uint8_t character)
+{
+	HAL_GPIO_WritePin(lcd->rs_port, lcd->rs_pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(lcd->en_port, lcd->en_pin, GPIO_PIN_SET);
+	
+	if(lcd->mode == _8_BIT)
+	{
+		for( uint8_t i=0; i < 8; i++)
+		{
+			HAL_GPIO_WritePin(lcd->data_ports[i], lcd->data_pins[i], (cmd>>i)%2 );
+		}
+		HAL_GPIO_WritePin(lcd->en_port, lcd->en_pin, GPIO_PIN_RESET);
+	}
+	else if(lcd->mode == _4_BIT)
+	{
+		for( uint8_t i=4; i < 8; i++)
+		{
+			HAL_GPIO_WritePin(lcd->data_ports[i-4], lcd->data_pins[i-4], (cmd>>i)%2 );
+		}
+		HAL_GPIO_WritePin(lcd->en_port, lcd->en_pin, GPIO_PIN_RESET);
+		HAL_Delay(1); //It should be 10ns minimum
+		HAL_GPIO_WritePin(lcd->en_port, lcd->en_pin, GPIO_PIN_SET);
+		
+		for( uint8_t i=0; i < 4; i++)
+		{
+			HAL_GPIO_WritePin(lcd->data_ports[i], lcd->data_pins[i], (cmd>>i)%2 );
+		}
+		HAL_GPIO_WritePin(lcd->en_port, lcd->en_pin, GPIO_PIN_RESET);
+	}	
+	HAL_Delay(1); //It should be 10ns minimum
+		
+}
+
+void lcd_clear(lcd_t * lcd)
+{
+	send_cmd(lcd, 0x01);
+}
+
+void lcd_puts(lcd_t * lcd, char *str)
+{
+	while (*str != 0)
+	{
+		lcd_putchar(lcd, *str);
+		str++;
+		HAL_Delay(1);
+	}
+}
+
+void lcd_set_curser(lcd_t * lcd, uint16_t row, uint16_t col)
+{
+	
+}
