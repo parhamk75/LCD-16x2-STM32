@@ -1,0 +1,11 @@
+#include "lm016.h"
+
+
+
+void send_cmd(lcd_t * lcd, uint8_t cmd)
+{
+	HAL_GPIO_WritePin(lcd.
+}
+
+	
+	
