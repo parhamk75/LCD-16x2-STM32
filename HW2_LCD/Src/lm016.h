@@ -26,6 +26,7 @@ void lcd_putchar(lcd_t * lcd, uint8_t character);
 void lcd_set_curser(lcd_t * lcd, uint16_t row, uint16_t col);
 void lcd_clear(lcd_t * lcd);
 void lcd_puts(lcd_t * lcd, char *str);
+
 void send_cmd(lcd_t * lcd, uint8_t cmd);
 
 #endif
