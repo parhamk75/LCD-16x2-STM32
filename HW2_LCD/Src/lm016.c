@@ -55,6 +55,11 @@ void lcd_init(lcd_t * lcd)
 		HAL_GPIO_Init(lcd->data_ports[i], &GI);
 	}
 	
+	GI.Pin  = lcd->rs_pin;
+	HAL_GPIO_Init(lcd->rs_port, &GI);
+	
+	GI.Pin  = lcd->en_pin;
+	HAL_GPIO_Init(lcd->en_port, &GI);
 	
 	HAL_Delay(40);  //Can be omitted if it isn't the first function in your code
 	if(lcd->mode == _8_BIT)
@@ -68,7 +73,7 @@ void lcd_init(lcd_t * lcd)
 	
 	send_cmd(lcd, 0x01);
 	send_cmd(lcd, 0x06);
-	send_cmd(lcd, 0x0C);
+	send_cmd(lcd, 0x0E);
 	
 }	
 	

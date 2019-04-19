@@ -22,7 +22,7 @@ void send_cmd(lcd_t * lcd, uint8_t cmd)
 			HAL_GPIO_WritePin(lcd->data_ports[i-4], lcd->data_pins[i-4], (cmd>>i)%2 );
 		}
 		HAL_GPIO_WritePin(lcd->en_port, lcd->en_pin, GPIO_PIN_RESET);
-		//HAL_Delay(1); //It should be 10ns minimum
+		HAL_Delay(1); //It should be 10ns minimum
 		HAL_GPIO_WritePin(lcd->en_port, lcd->en_pin, GPIO_PIN_SET);
 		
 		for( uint8_t i=0; i < 4; i++)
@@ -31,7 +31,7 @@ void send_cmd(lcd_t * lcd, uint8_t cmd)
 		}
 		HAL_GPIO_WritePin(lcd->en_port, lcd->en_pin, GPIO_PIN_RESET);
 	}	
-	//HAL_Delay(1); //It should be 10ns minimum
+	HAL_Delay(1); //It should be 10ns minimum
 		
 }
 
@@ -55,6 +55,11 @@ void lcd_init(lcd_t * lcd)
 		HAL_GPIO_Init(lcd->data_ports[i], &GI);
 	}
 	
+	GI.Pin  = lcd->rs_pin;
+	HAL_GPIO_Init(lcd->rs_port, &GI);
+	
+	GI.Pin  = lcd->en_pin;
+	HAL_GPIO_Init(lcd->en_port, &GI);
 	
 	HAL_Delay(40);  //Can be omitted if it isn't the first function in your code
 	if(lcd->mode == _8_BIT)
@@ -66,7 +71,7 @@ void lcd_init(lcd_t * lcd)
 		send_cmd(lcd, 0x28);
 	}
 	
-	//send_cmd(lcd, 0x01);
+	send_cmd(lcd, 0x01);
 	send_cmd(lcd, 0x06);
 	send_cmd(lcd, 0x0C);
 	
@@ -92,7 +97,7 @@ void lcd_putchar(lcd_t * lcd, uint8_t character)
 			HAL_GPIO_WritePin(lcd->data_ports[i-4], lcd->data_pins[i-4], (character>>i)%2 );
 		}
 		HAL_GPIO_WritePin(lcd->en_port, lcd->en_pin, GPIO_PIN_RESET);
-		//HAL_Delay(1); //It should be 10ns minimum
+		HAL_Delay(1); //It should be 10ns minimum
 		HAL_GPIO_WritePin(lcd->en_port, lcd->en_pin, GPIO_PIN_SET);
 		
 		for( uint8_t i=0; i < 4; i++)
@@ -101,7 +106,7 @@ void lcd_putchar(lcd_t * lcd, uint8_t character)
 		}
 		HAL_GPIO_WritePin(lcd->en_port, lcd->en_pin, GPIO_PIN_RESET);
 	}	
-	//HAL_Delay(1); //It should be 10ns minimum
+	HAL_Delay(1); //It should be 10ns minimum
 		
 }
 

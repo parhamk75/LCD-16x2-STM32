@@ -14,9 +14,11 @@ typedef struct{
 GPIO_TypeDef* data_ports[8];
 GPIO_TypeDef* en_port;
 GPIO_TypeDef* rs_port;
+GPIO_TypeDef* rw_port;
 uint16_t data_pins[8];
 uint16_t en_pin;
 uint16_t rs_pin;
+uint16_t rw_pin;	
 lcd_dl_t mode;
 }lcd_t;
 

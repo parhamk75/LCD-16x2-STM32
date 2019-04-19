@@ -6,8 +6,8 @@
 #include "stm32f4xx_hal_gpio.h"
 typedef enum
 {
-_8_BIT = 1,
-_4_BIT = 0
+	_8_BIT = 1,
+	_4_BIT = 0
 }lcd_dl_t;
 
 typedef struct{
