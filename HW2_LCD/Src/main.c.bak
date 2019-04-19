@@ -51,7 +51,8 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-
+char tmp_str_1[16];
+char tmp_str_2[16];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -152,13 +153,34 @@ int main(void)
 	lcd_putchar(&lcd_0, 'H');
 	lcd_set_curser(&lcd_0, 2, 5);
 	lcd_puts(&lcd_0, "PARHAM");
-	HAL_Delay(1000);
+	HAL_Delay(2000);
+	
 	lcd_clear(&lcd_0);
+	lcd_puts(&lcd_0, "PARHAM123456789012345678901234567890");
+	HAL_Delay(3000);
 	
-	
+
 	
   while (1)
   {
+		lcd_clear(&lcd_0);
+		send_cmd(&lcd_0, 0x0C);
+		uint8_t tmp_max = 100;
+		for(uint8_t i=0; i<=tmp_max; i++)
+		{
+			sprintf(tmp_str_1,"====> %3d <====",i);
+			lcd_set_curser(&lcd_0, 1, 1);
+			lcd_puts(&lcd_0, tmp_str_1);
+			
+			uint8_t tmp_factor = (uint8_t) tmp_max/16;
+			if( (i%tmp_factor == 0) && (i != 0) )
+			{
+				lcd_set_curser(&lcd_0, 2, (uint8_t)i/tmp_factor);
+				lcd_putchar(&lcd_0, 0xFC);
+			}
+			
+			HAL_Delay(300);
+		}
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */

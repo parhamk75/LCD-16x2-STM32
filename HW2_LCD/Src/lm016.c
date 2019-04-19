@@ -117,11 +117,18 @@ void lcd_clear(lcd_t * lcd)
 
 void lcd_puts(lcd_t * lcd, char *str)
 {
+	uint8_t tmp_cntr = 1;
 	while (*str != 0)
 	{
+		if(tmp_cntr > 16)
+		{
+			lcd_set_curser(lcd, 2, 1);
+			tmp_cntr = 0;
+		}
+		tmp_cntr++;
 		lcd_putchar(lcd, *str);
 		str++;
-		HAL_Delay(1);
+		HAL_Delay(1);		
 	}
 }
 
