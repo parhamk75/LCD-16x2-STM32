@@ -1,11 +1,12 @@
 --cpu=Cortex-M4.fp
 "hw2_lcd\startup_stm32f401xe.o"
+"hw2_lcd\lm016.o"
 "hw2_lcd\main.o"
 "hw2_lcd\gpio.o"
+"hw2_lcd\tim.o"
 "hw2_lcd\usart.o"
 "hw2_lcd\stm32f4xx_it.o"
 "hw2_lcd\stm32f4xx_hal_msp.o"
-"hw2_lcd\lm016.o"
 "hw2_lcd\stm32f4xx_hal_tim.o"
 "hw2_lcd\stm32f4xx_hal_tim_ex.o"
 "hw2_lcd\stm32f4xx_hal_uart.o"

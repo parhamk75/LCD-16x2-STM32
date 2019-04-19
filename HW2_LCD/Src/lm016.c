@@ -80,7 +80,7 @@ void lcd_putchar(lcd_t * lcd, uint8_t character)
 	{
 		for( uint8_t i=0; i < 8; i++)
 		{
-			HAL_GPIO_WritePin(lcd->data_ports[i], lcd->data_pins[i], (cmd>>i)%2 );
+			HAL_GPIO_WritePin(lcd->data_ports[i], lcd->data_pins[i], (character>>i)%2 );
 		}
 		HAL_GPIO_WritePin(lcd->en_port, lcd->en_pin, GPIO_PIN_RESET);
 	}
@@ -88,7 +88,7 @@ void lcd_putchar(lcd_t * lcd, uint8_t character)
 	{
 		for( uint8_t i=4; i < 8; i++)
 		{
-			HAL_GPIO_WritePin(lcd->data_ports[i-4], lcd->data_pins[i-4], (cmd>>i)%2 );
+			HAL_GPIO_WritePin(lcd->data_ports[i-4], lcd->data_pins[i-4], (character>>i)%2 );
 		}
 		HAL_GPIO_WritePin(lcd->en_port, lcd->en_pin, GPIO_PIN_RESET);
 		HAL_Delay(1); //It should be 10ns minimum
@@ -96,7 +96,7 @@ void lcd_putchar(lcd_t * lcd, uint8_t character)
 		
 		for( uint8_t i=0; i < 4; i++)
 		{
-			HAL_GPIO_WritePin(lcd->data_ports[i], lcd->data_pins[i], (cmd>>i)%2 );
+			HAL_GPIO_WritePin(lcd->data_ports[i], lcd->data_pins[i], (character>>i)%2 );
 		}
 		HAL_GPIO_WritePin(lcd->en_port, lcd->en_pin, GPIO_PIN_RESET);
 	}	
