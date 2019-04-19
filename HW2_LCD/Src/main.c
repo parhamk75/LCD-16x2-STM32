@@ -102,8 +102,8 @@ int main(void)
 	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);	// LCD CONTRAST
 	HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3); // LCD BACKLIGHT
 	
-	__HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_3, 50); // 0 => High Cont.  100 => Low Cont.
-	__HAL_TIM_SetCompare(&htim4, TIM_CHANNEL_3, 30);
+	__HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_3, 30); // 0 => High Cont.  100 => Low Cont.
+	__HAL_TIM_SetCompare(&htim4, TIM_CHANNEL_3, 60);
 	
 	/* <= LCD Initialization BEGIN => */
 	lcd_t lcd_0;
@@ -128,11 +128,15 @@ int main(void)
 	
 	
 	// Control Ports
-	lcd_0.en_port 			= GPIOB;
 	lcd_0.rs_port				= GPIOB;
+	lcd_0.rw_port				= GPIOB;
+	lcd_0.en_port 			= GPIOB;
+	
 	// Control Pins
+	lcd_0.rs_pin				= GPIO_PIN_10;
+	lcd_0.rw_pin				= GPIO_PIN_3;
 	lcd_0.en_pin 				= GPIO_PIN_5;
-	lcd_0.rs_pin				= GPIO_PIN_4;
+	
 	
 	// Mode
 	lcd_0.mode					= _8_BIT;
@@ -144,15 +148,23 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+	HAL_Delay(1000);
+	lcd_set_curser(&lcd_0, 2, 1);
+	lcd_putchar(&lcd_0, 'H');
+	HAL_UART_Transmit(&huart2, (uint8_t*)"Hello every one...!\n", 20, 200);
   while (1)
   {
+		HAL_Delay(1000);
+	lcd_set_curser(&lcd_0, 2, 1);
+	lcd_putchar(&lcd_0, 'H');
 		for( uint8_t i = 0; i < 100; i++)
 		{
+			//HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
+			
+			HAL_UART_Transmit(&huart2, (uint8_t*)"Hello every two...!\n", 20, 200);
 			__HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_3, i);
-			HAL_Delay(200);
+			HAL_Delay(300);
 		}
-		
-		HAL_Delay(1000);
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
