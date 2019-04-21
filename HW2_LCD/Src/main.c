@@ -51,6 +51,8 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
+lcd_t lcd_0;
+	
 char tmp_str_1[16];
 char tmp_str_2[16];
 /* USER CODE END PV */
@@ -107,7 +109,7 @@ int main(void)
 	__HAL_TIM_SetCompare(&htim4, TIM_CHANNEL_3, 60);
 	
 	/* <= LCD Initialization BEGIN => */
-	lcd_t lcd_0;
+
 	// Data Ports
 	lcd_0.data_ports[0] = GPIOB;
 	lcd_0.data_ports[1] = GPIOA;
@@ -138,7 +140,7 @@ int main(void)
 	
 	
 	// Mode
-	lcd_0.mode					= _8_BIT;
+	lcd_0.mode					= _4_BIT;
 	
 	lcd_init(&lcd_0);
 	/* <= LCD Initialization END => */
@@ -148,7 +150,8 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	HAL_Delay(1000);
-	
+	lcd_clear(&lcd_0);
+
 	
 	lcd_putchar(&lcd_0, 'H');
 	lcd_set_curser(&lcd_0, 2, 5);
